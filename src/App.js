@@ -10,6 +10,7 @@ import StopListA from './StopList'
 import Services, { ServiceScreen } from './Services'
 import STOPS from './stops';
 import SplashScreen from "./views/SplashScreen";
+import ChatView from "./views/ChatView";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
              return <ServiceScreen {...props} service={service} />
           }} />
           <Route path="/stop/:stopnumber" component={Stop}/>
+          <Route path="/chat" component={ChatView}/>
         
           <Route path="/">
             <SplashScreen />

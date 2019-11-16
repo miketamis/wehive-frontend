@@ -260,7 +260,9 @@ function SuccessDialog({visible, onClose}) {
   return (
     <>
       <MyDialog2 visible={visible}>
-        <img src={Success} alt="" width="100%" onClick={onClose}/>
+        <Link to={'/chat'}>
+          <img src={Success} alt="" width="100%" />
+        </Link>
       </MyDialog2>
     </>
   );
