@@ -2,7 +2,7 @@
   "name": "wehive-webapp",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://miketamis.github.io/wehive-frontend",
+  "homepage": "https://miketamis.github.io/wehive-frontend/",
   "dependencies": {
     "gh-pages": "^2.1.1",
     "moment": "^2.24.0",
@@ -13,7 +13,9 @@
     "react-swipe-row": "^0.1.0",
     "react-transition-group": "^4.3.0",
     "reakit": "^1.0.0-beta.12",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "babel-jest": "^24.9.0",
+    "jest": "24.9.0"
   },
   "scripts": {
     "predeploy": "npm run build",
