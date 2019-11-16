@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/wehive-frontend/static/css/main.34de6062.chunk.css",
+    "main.js": "/wehive-frontend/static/js/main.90e90917.chunk.js",
+    "main.js.map": "/wehive-frontend/static/js/main.90e90917.chunk.js.map",
+    "runtime-main.js": "/wehive-frontend/static/js/runtime-main.6f98731e.js",
+    "runtime-main.js.map": "/wehive-frontend/static/js/runtime-main.6f98731e.js.map",
+    "static/js/2.3407c18c.chunk.js": "/wehive-frontend/static/js/2.3407c18c.chunk.js",
+    "static/js/2.3407c18c.chunk.js.map": "/wehive-frontend/static/js/2.3407c18c.chunk.js.map",
+    "index.html": "/wehive-frontend/index.html",
+    "precache-manifest.d4e07c8876d8690a247614b0e477209f.js": "/wehive-frontend/precache-manifest.d4e07c8876d8690a247614b0e477209f.js",
+    "service-worker.js": "/wehive-frontend/service-worker.js",
+    "static/css/main.34de6062.chunk.css.map": "/wehive-frontend/static/css/main.34de6062.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6f98731e.js",
+    "static/js/2.3407c18c.chunk.js",
+    "static/css/main.34de6062.chunk.css",
+    "static/js/main.90e90917.chunk.js"
+  ]
+}
