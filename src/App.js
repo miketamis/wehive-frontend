@@ -5,130 +5,176 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import styled, { css } from 'styled-components';
-import StopListA from './StopList'
-import Services, { ServiceScreen } from './Services'
-import STOPS from './stops';
+import styled, { css } from "styled-components";
+import StopListA from "./StopList";
+import Services, { ServiceScreen } from "./Services";
+import STOPS from "./stops";
 import SplashScreen from "./views/SplashScreen";
 import ChatView from "./views/ChatView";
 
 export default function App() {
   return (
     <Router>
-        <Switch>
-          <Route path="/stoplist">
-            <StopList />
-          </Route>
-          <Route path="/stopmap">
-            <StopMap />
-          </Route>
-          <Route path="/stop/:stopnumber/:code" component={(props) =>{
-              const stop = STOPS.find(({ stopNumber }) => stopNumber + '' === props.match.params.stopnumber + '')
-              console.log(stop)
-              const service = stop.services.find(({ code }) => code + '' === props.match.params.code + '')
-              console.log(service);
-             return <ServiceScreen {...props} service={service} />
-          }} />
-          <Route path="/stop/:stopnumber" component={Stop}/>
-          <Route path="/chat" component={ChatView}/>
-        
-          <Route path="/">
-            <SplashScreen />
-            {/* <Redirect to="/stoplist" /> */}
-          </Route>
-        </Switch>
+      <Switch>
+        <Route path="/stoplist">
+          <StopList />
+        </Route>
+        <Route path="/stopmap">
+          <StopMap />
+        </Route>
+        <Route
+          path="/stop/:stopnumber/:code"
+          component={props => {
+            const stop = STOPS.find(
+              ({ stopNumber }) =>
+                stopNumber + "" === props.match.params.stopnumber + ""
+            );
+            console.log(stop);
+            const service = stop.services.find(
+              ({ code }) => code + "" === props.match.params.code + ""
+            );
+            console.log(service);
+            return <ServiceScreen {...props} service={service} />;
+          }}
+        />
+        <Route path="/stop/:stopnumber" component={Stop} />
+        <Route path="/chat" component={ChatView} />
+
+        <Route path="/">
+          <SplashScreen />
+          {/* <Redirect to="/stoplist" /> */}
+        </Route>
+      </Switch>
     </Router>
   );
 }
 
 const SubHeader = styled.div`
-      vertical-align: middle;
-    text-align: center;
-    border-bottom: 1px solid gray;
-    padding-bottom: 16px;
-
-`
+  vertical-align: middle;
+  text-align: center;
+  border-bottom: 1px solid gray;
+  padding-bottom: 16px;
+`;
 
 function Stop({ match, history }) {
-  const stop = STOPS.find(({ stopNumber }) => stopNumber + '' === match.params.stopnumber + '')
-  return <div>
-        <Header title="Departures" onClickLeftIcon={() => history.goBack()} />
-        <SubHeader>Stop {stop.stopNumber} - {stop.addressLabel}</SubHeader>
-        <Services stop={stop} history={history} />
+  const stop = STOPS.find(
+    ({ stopNumber }) => stopNumber + "" === match.params.stopnumber + ""
+  );
+  return (
+    <div>
+      <Header title="Departures" onClickLeftIcon={() => history.goBack()} />
+      <SubHeader>
+        Stop {stop.stopNumber} - {stop.addressLabel}
+      </SubHeader>
+      <Services stop={stop} history={history} />
     </div>
+  );
 }
 
-const ICON_SIZE = '24px';
+const ICON_SIZE = "30px";
 const ProfilePicture = styled.img`
   border-radius: 50%;
   width: ${ICON_SIZE};
   height: ${ICON_SIZE};
-  border: 1px solid #acacac;
+  border: 3px solid #ffffff;
+  margin-right: 15px;
 `;
 
 const HeaderContainer = styled.div`
-background: white;
-display: flex;
-padding: 8px;
-margin-bottom: 8px;
-`
+  background: white;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  align-items: start;
+  padding-top: 10px;
+  justify-content: center;
+  height: 150px;
+  width: 100%;
+  background-color: #ffd700;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+`;
 const HeaderText = styled.div`
-  margin: auto;
-  font-size: 16px;
+  justify-self: center;
+  font-size: 26px;
   font-weight: 600;
-`
+`;
 
 const LeftIcon = styled.div`
-    width: 16px;
-    height: 16px;
-    border: solid ${({ show }) => show ? '#478EB9' : '#FF'};
-    
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    transform: rotate(135deg);
-    margin: 8px;
-    
-    
-   
+  width: 16px;
+  height: 16px;
+  border: solid ${({ show }) => (show ? "#478EB9" : "#FF")};
 
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  transform: rotate(135deg);
+  margin: 8px;
 `;
 
 function Header({ title, onClickLeftIcon }) {
-  return <HeaderContainer>
-    <LeftIcon show={!!onClickLeftIcon} onClick={onClickLeftIcon}  /> <HeaderText>{title}</HeaderText><ProfilePicture src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" />
-  </HeaderContainer>
+  return (
+    <HeaderContainer>
+      <LeftIcon show={!!onClickLeftIcon} onClick={onClickLeftIcon} />{" "}
+      <HeaderText>{title}</HeaderText>
+      <ProfilePicture src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" />
+    </HeaderContainer>
+  );
 }
 
+const TabListContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const TabList = styled.ul`
-list-style-type: none;
-    display: flex;
-    padding-left: 0;
-    margin: 0;
-`
+  position: absolute;
+  top: 80px;
+  list-style-type: none;
+  display: flex;
+  padding-left: 0;
+  margin: 0;
+  height: 61px;
+  width: 263px;
+  background-color: #FFFFFF;
+  box-shadow: 0 10px 20px 0 rgba(0,0,0,0.1);
+  z-height: 999;
+`;
 
 const Tab = styled.li`
-flex: 1;
-text-align: center;
-padding: 0 8px 16px;
-border-bottom: 1px solid gray;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   ${({ selected }) => selected && css`
-    border-bottom: 3px solid #478EB9;
-    color: #478EB9;
+    color: #cccccc;
   `}
-`
+`;
 
 const Bar = styled.div`
   width: 1px;
-    height: 24px;
-    background: grey;
-`
+  height: 100%;
+  background: grey;
+`;
+
+const ListIcon = require('./assets/Icons/List.png');
+const MapIcon = require('./assets/Icons/Map.png');
 
 function Tabs() {
-  return <TabList>
-    <Tab selected>List view</Tab>
-    <Bar></Bar>
-    <Tab>Map view</Tab>
-  </TabList>
+  return (
+    <TabListContainer>
+      <TabList>
+        <Tab>
+         <img src={ListIcon} alt="" height="20"/>
+          List
+        </Tab>
+        <Bar></Bar>
+        <Tab selected>
+          <img src={MapIcon} alt="" height="20"/>
+          Map
+        </Tab>
+      </TabList>
+    </TabListContainer>
+  );
 }
 
 function Home() {
@@ -136,11 +182,14 @@ function Home() {
 }
 
 function StopList() {
-  return <div>
-    <Header  title="Select your stop" />
-    <Tabs></Tabs>
-    <StopListA />
-    </div>;
+  return (
+    <div>
+      <Header title="Select your stop" />
+      <Tabs></Tabs>
+      <br/>
+      <StopListA />
+    </div>
+  );
 }
 
 function StopMap() {
