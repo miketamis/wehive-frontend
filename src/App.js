@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import styled, { css } from 'styled-components';
 import StopListA from './StopList'
-import Services from './Services'
+import Services, { ServiceScreen } from './Services'
 import STOPS from './stops';
 
 export default function App() {
@@ -20,8 +20,15 @@ export default function App() {
           <Route path="/stopmap">
             <StopMap />
           </Route>
-          <Route path="/stop/:stopnumber" component={Stop}>
-          </Route>
+          <Route path="/stop/:stopnumber/:code" component={(props) =>{
+              const stop = STOPS.find(({ stopNumber }) => stopNumber + '' === props.match.params.stopnumber + '')
+              console.log(stop)
+              const service = stop.services.find(({ code }) => code + '' === props.match.params.code + '')
+              console.log(service);
+             return <ServiceScreen {...props} service={service} />
+          }} />
+          <Route path="/stop/:stopnumber" component={Stop}/>
+        
           <Route path="/">
           <Redirect to="/stoplist" />
           </Route>
@@ -43,7 +50,7 @@ function Stop({ match, history }) {
   return <div>
         <Header title="Departures" onClickLeftIcon={() => history.goBack()} />
         <SubHeader>Stop {stop.stopNumber} - {stop.addressLabel}</SubHeader>
-        <Services stop={stop} />
+        <Services stop={stop} history={history} />
     </div>
 }
 

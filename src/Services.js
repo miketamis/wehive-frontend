@@ -41,20 +41,24 @@ const Time = styled.div`
 `
 
 const Left = styled.div`
-
+display: flex;
+        align-items: center;
 `
 
-function Services({ stop }) {
+function Services({ stop, history }) {
   return stop.services.map(({ code, reported, endStopSuburb, estimatedTimeTillArrival }) => (
     <SwipeRow
       rowId={code}
       rightButtons={[<Report>Report</Report>]}
       disableSwipeRight
     >
-      <Service reported={reported}>
+      <Service       onClick={() => history.push(`/stop/${stop.stopNumber}/${code}`)}
+ reported={reported}>
           <Left>
+              <div>
           <StopCode>{code}</StopCode>
           <Destination>to {endStopSuburb}</Destination>
+          </div>
           </Left>
           <Time>
           {moment().add(estimatedTimeTillArrival, 'minutes').format('h:mma')}
@@ -63,6 +67,40 @@ function Services({ stop }) {
 
     </SwipeRow>
   ));
+}
+
+const ServiceHeader = Service;
+
+const Back = styled.div`
+    width: 16px;
+    height: 16px;
+    border: solid #478EB9;
+    
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    transform: rotate(135deg);
+    margin: 8px;
+    
+    
+   
+
+`;
+
+
+export function ServiceScreen({ history, service: { code, endStopSuburb, estimatedTimeTillArrival, reported }}) {
+    return <ServiceHeader reported={reported}>
+    <Left>
+    <Back onClick={history.goBack()}/>
+    <div>
+    <StopCode>{code}</StopCode>
+    <Destination>to {endStopSuburb}</Destination>
+    </div>
+    </Left>
+    <Time>
+    {moment().add(estimatedTimeTillArrival, 'minutes').format('h:mma')}
+    </Time>
+  </ServiceHeader>
+
 }
 
 export default Services;
