@@ -53,6 +53,7 @@ function Services({ stop, history }) {
   const [showDialog, setShowDialog] = useState(false);
   return <div>
     <ReportDialog visible={showDialog} service={stop.services[0]} />
+    <SuccessDialog visible={true} />
 {stop.services.map(
     ({ code, reported, endStopSuburb, estimatedTimeTillArrival }) => (
       <SwipeRow
@@ -139,6 +140,19 @@ border: 1px solid rgba(33,33,33,0.25);
 color: #212121;
 z-index: 999;
 `
+const MyDialog2 = styled(Dialog)`
+width: 350px;
+color: #212121;
+position: fixed;
+top: 28px;
+left: 50%;
+transform: translateX(-50%);
+padding: 1em;
+max-height: calc(100vh - 56px);
+outline: 0;
+color: #212121;
+z-index: 999;
+`
 
 const IconGrid = styled.div`
   display: grid;
@@ -158,6 +172,29 @@ const NoShow = require('./assets/report/noShow.png');
 const Other = require('./assets/report/other.png');
 const Packed = require('./assets/report/packed.png');
 const Security = require('./assets/report/security.png');
+
+const ButtonRow = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CancelButton = styled.button`
+  box-sizing: border-box;
+  height: 41px;
+  width: 139px;
+  border: 1px solid #FFD700;
+  background-color: #FFFFFF;
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+  font-size: 13px;
+`;
+const SubmitButton = styled.button`
+	height: 40px;
+	width: 138px;
+	background-color: #FFD700;
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+  font-size: 13px;
+`;
 
 function ReportDialog({ visible, service: { code, endStopSuburb, estimatedTimeTillArrival, reported } }) {
   return (
@@ -199,7 +236,24 @@ function ReportDialog({ visible, service: { code, endStopSuburb, estimatedTimeTi
             <img src={Other} alt="" width="85"/>
           </IconItem>
         </IconGrid>
+        <ButtonRow>
+          <CancelButton>Cancel</CancelButton>
+          <SubmitButton onClick={() => {}}>Submit</SubmitButton>
+          {/* <Button>Submit</Button> */}
+        </ButtonRow>
       </MyDialog>
+    </>
+  );
+}
+
+const Success = require('./assets/Success.png');
+
+function SuccessDialog({visible}) {
+  return (
+    <>
+      <MyDialog2 visible={visible} >
+        <img src={Success} alt="" width="100%"/>
+      </MyDialog2>
     </>
   );
 }
