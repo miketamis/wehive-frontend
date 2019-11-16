@@ -9,6 +9,7 @@ import styled, { css } from 'styled-components';
 import StopListA from './StopList'
 import Services, { ServiceScreen } from './Services'
 import STOPS from './stops';
+import SplashScreen from "./views/SplashScreen";
 
 export default function App() {
   return (
@@ -30,7 +31,8 @@ export default function App() {
           <Route path="/stop/:stopnumber" component={Stop}/>
         
           <Route path="/">
-          <Redirect to="/stoplist" />
+            <SplashScreen />
+            {/* <Redirect to="/stoplist" /> */}
           </Route>
         </Switch>
     </Router>

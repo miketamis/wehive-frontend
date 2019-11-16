@@ -50,10 +50,18 @@ const Left = styled.div`
 `;
 
 function Services({ stop, history }) {
-  const [showDialog, setShowDialog] = useState(false);
+  const [showDialog, setShowDialog ] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog ] = useState(false);
+
   return <div>
-    <ReportDialog visible={showDialog} service={stop.services[0]} />
-    <SuccessDialog visible={true} />
+    <ReportDialog visible={showDialog} service={stop.services[0]} onSubmit={() => {
+      setShowSuccessDialog(true);
+      setShowDialog(false);
+    }
+    }/>
+    <SuccessDialog visible={showSuccessDialog} onClose={() => {
+      setShowSuccessDialog(false);
+    }} />
 {stop.services.map(
     ({ code, reported, endStopSuburb, estimatedTimeTillArrival }) => (
       <SwipeRow
@@ -196,7 +204,7 @@ const SubmitButton = styled.button`
   font-size: 13px;
 `;
 
-function ReportDialog({ visible, service: { code, endStopSuburb, estimatedTimeTillArrival, reported } }) {
+function ReportDialog({ visible, onSubmit, service: { code, endStopSuburb, estimatedTimeTillArrival, reported } }) {
   return (
     <>
       <MyDialog visible={visible} >
@@ -238,7 +246,7 @@ function ReportDialog({ visible, service: { code, endStopSuburb, estimatedTimeTi
         </IconGrid>
         <ButtonRow>
           <CancelButton>Cancel</CancelButton>
-          <SubmitButton onClick={() => {}}>Submit</SubmitButton>
+          <SubmitButton onClick={onSubmit}>Submit</SubmitButton>
           {/* <Button>Submit</Button> */}
         </ButtonRow>
       </MyDialog>
@@ -248,11 +256,11 @@ function ReportDialog({ visible, service: { code, endStopSuburb, estimatedTimeTi
 
 const Success = require('./assets/Success.png');
 
-function SuccessDialog({visible}) {
+function SuccessDialog({visible, onClose}) {
   return (
     <>
-      <MyDialog2 visible={visible} >
-        <img src={Success} alt="" width="100%"/>
+      <MyDialog2 visible={visible}>
+        <img src={Success} alt="" width="100%" onClick={onClose}/>
       </MyDialog2>
     </>
   );
