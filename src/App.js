@@ -12,6 +12,7 @@ import Services, { ServiceScreen } from "./Services";
 import STOPS from "./stops";
 import SplashScreen from "./views/SplashScreen";
 import ChatView from "./views/ChatView";
+import SimpleMap from "./views/mapStops";
 
 export default function App() {
   return (
@@ -192,14 +193,17 @@ function StopList({ history }) {
   );
 }
 
+const MapWrap = styled.div`
+  height: 100vh;
+`;
+
 function StopMap({ history }) {
   return     <div>
   <Header title="Select your stop" />
   <Tabs history={history}></Tabs>
   <br/>
-
-  HELLO MAP
-
-  
+  <MapWrap>
+    <SimpleMap />
+  </MapWrap>
   </div>;
 }
