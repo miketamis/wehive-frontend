@@ -17,8 +17,9 @@ const List = styled.ul`
 
 const Stop = styled.li`
   padding: 8px;
+  margin: 15px;
   border-bottom: 1px solid #e8e8e8;
-  background: #ecf5fc;
+  background: #E1F4FF;
   display: flex;
   cursor: pointer;
 `;
