@@ -17,12 +17,11 @@ export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/stoplist">
-          <StopList />
-        </Route>
-        <Route path="/stopmap">
-          <StopMap />
-        </Route>
+        <Route path="/stoplist" component={StopList} />
+         
+        <Route path="/stopmap" component={StopMap} />
+  
+        
         <Route
           path="/stop/:stopnumber/:code"
           component={props => {
@@ -160,16 +159,16 @@ const Bar = styled.div`
 const ListIcon = require('./assets/Icons/List.png');
 const MapIcon = require('./assets/Icons/Map.png');
 
-function Tabs() {
+function Tabs({ history }) {
   return (
     <TabListContainer>
       <TabList>
-        <Tab>
+        <Tab selected={history.location.pathname !== '/stoplist'}  onClick={() => history.push('/stoplist')}>
          <img src={ListIcon} alt="" height="20"/>
           List
         </Tab>
         <Bar></Bar>
-        <Tab selected>
+        <Tab selected={history.location.pathname !== '/stopmap'} onClick={() => history.push('/stopmap')}>
           <img src={MapIcon} alt="" height="20"/>
           Map
         </Tab>
@@ -182,17 +181,25 @@ function Home() {
   return <h2>Home</h2>;
 }
 
-function StopList() {
+function StopList({ history }) {
   return (
     <div>
       <Header title="Select your stop" />
-      <Tabs></Tabs>
+      <Tabs history={history}></Tabs>
       <br/>
       <StopListA />
     </div>
   );
 }
 
-function StopMap() {
-  return <h2>Select your stop - Map view</h2>;
+function StopMap({ history }) {
+  return     <div>
+  <Header title="Select your stop" />
+  <Tabs history={history}></Tabs>
+  <br/>
+
+  HELLO MAP
+
+  
+  </div>;
 }
