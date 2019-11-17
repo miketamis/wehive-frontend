@@ -3,7 +3,8 @@ import {
   HashRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
+  withRouter
 } from "react-router-dom";
 import styled, { css } from "styled-components";
 import StopListA from "./StopList";
@@ -62,10 +63,7 @@ function Stop({ match, history }) {
   );
   return (
     <div>
-      <Header title="Departures" onClickLeftIcon={() => history.goBack()} />
-      <SubHeader>
-        Stop {stop.stopNumber} - {stop.addressLabel}
-      </SubHeader>
+      <Header title={stop.addressLabel} subtitle={stop.stopNumber} onClickLeftIcon={() => history.goBack()} />
       <Services stop={stop} history={history} />
     </div>
   );
@@ -87,11 +85,11 @@ const HeaderContainer = styled.div`
   align-items: start;
   padding-top: 10px;
   justify-content: center;
-  height: 150px;
+  height: ${({ show }) => (show ? "150px" : "50px")};
   width: 100%;
   background-color: #ffd700;
-  border-bottom-left-radius: 50%;
-  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: ${({ show }) => (show ? "50%" : "0%")};
+  border-bottom-right-radius: ${({ show }) => (show ? "50%" : "0%")};
 `;
 const HeaderText = styled.div`
   justify-self: center;
@@ -102,7 +100,7 @@ const HeaderText = styled.div`
 const LeftIcon = styled.div`
   width: 16px;
   height: 16px;
-  border: solid ${({ show }) => (show ? "#478EB9" : "#FF")};
+  border: solid ${({ show }) => (show ? "#000000" : "#FF")};
 
   border-width: 0 3px 3px 0;
   display: inline-block;
@@ -110,9 +108,12 @@ const LeftIcon = styled.div`
   margin: 8px;
 `;
 
-function Header({ title, onClickLeftIcon }) {
+const Header = withRouter(HeaderInside);
+
+function HeaderInside({ title, subtitle, onClickLeftIcon }, props) {
+  console.log(props);
   return (
-    <HeaderContainer>
+    <HeaderContainer show={!onClickLeftIcon}>
       <LeftIcon show={!!onClickLeftIcon} onClick={onClickLeftIcon} />{" "}
       <HeaderText>{title}</HeaderText>
       <ProfilePicture src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" />
