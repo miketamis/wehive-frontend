@@ -10,11 +10,7 @@ import styled, { css } from "styled-components";
 
 import SwipeRow from "react-swipe-row";
 import moment from "moment";
-import {
-  useDialogState,
-  Dialog,
-  DialogDisclosure
-} from "reakit/Dialog";
+import { useDialogState, Dialog, DialogDisclosure } from "reakit/Dialog";
 
 const Report = styled.div`
   padding: 32px 16px;
@@ -25,6 +21,8 @@ const Report = styled.div`
 const Service = styled.div`
   background: ${({ reported }) => (reported ? `#FEEAE9` : `#F3F9ED`)};
   padding: 16px;
+  margin: 8px;
+  box-shadow: 0 10px 20px 0 rgba(0,0,0,0.1);
   border-bottom: 1px solid #e8e8e8;
   display: flex;
   align-items: center;
@@ -50,27 +48,36 @@ const Left = styled.div`
 `;
 
 function Services({ stop, history }) {
-  const [showDialog, setShowDialog ] = useState(false);
-  const [showSuccessDialog, setShowSuccessDialog ] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
-  return <div>
-    <ReportDialog visible={showDialog} service={stop.services[0]} onSubmit={() => {
-      setShowSuccessDialog(true);
-      setShowDialog(false);
-    }
-    }/>
-    <SuccessDialog visible={showSuccessDialog} onClose={() => {
-      setShowSuccessDialog(false);
-    }} />
-{stop.services.map(
-    ({ code, reported, endStopSuburb, estimatedTimeTillArrival }) => (
-      <SwipeRow
-        rowId={code}
-        rightButtons={[<Report>Report</Report>]}
-        disableSwipeRight
-      >
+  return (
+    <div>
+      <ReportDialog
+        visible={showDialog}
+        service={stop.services[0]}
+        onSubmit={() => {
+          setShowSuccessDialog(true);
+          setShowDialog(false);
+        }}
+      />
+      <SuccessDialog
+        visible={showSuccessDialog}
+        onClose={() => {
+          setShowSuccessDialog(false);
+        }}
+      />
+      {stop.services.map(
+        ({ code, reported, endStopSuburb, estimatedTimeTillArrival }) => (
+          <SwipeRow
+            rowId={code}
+            rightButtons={[<Report>Report</Report>]}
+            disableSwipeRight
+          >
             <Service
-              onClick={() => { setShowDialog(true)}}
+              onClick={() => {
+                setShowDialog(true);
+              }}
               reported={reported}
             >
               <Left>
@@ -85,11 +92,11 @@ function Services({ stop, history }) {
                   .format("h:mma")}
               </Time>
             </Service>
-          
-      </SwipeRow>
-    )
-  )}
+          </SwipeRow>
+        )
+      )}
     </div>
+  );
 }
 
 const ServiceHeader = Service;
@@ -130,37 +137,37 @@ const TimeBox = styled.div`
 `;
 
 const MyDialog = styled(Dialog)`
-box-sizing: border-box;
-width: 350px;
-border-radius: 10px;
-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4);
-color: #212121;
-background-color: #ffffff;
-position: fixed;
-top: 28px;
-left: 50%;
-transform: translateX(-50%);
-border-radius: 0.25rem;
-padding: 1em;
-max-height: calc(100vh - 56px);
-outline: 0;
-border: 1px solid rgba(33,33,33,0.25);
-color: #212121;
-z-index: 999;
-`
+  box-sizing: border-box;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4);
+  color: #212121;
+  background-color: #ffffff;
+  position: fixed;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 0.25rem;
+  padding: 1em;
+  max-height: calc(100vh - 56px);
+  outline: 0;
+  border: 1px solid rgba(33, 33, 33, 0.25);
+  color: #212121;
+  z-index: 999;
+`;
 const MyDialog2 = styled(Dialog)`
-width: 350px;
-color: #212121;
-position: fixed;
-top: 28px;
-left: 50%;
-transform: translateX(-50%);
-padding: 1em;
-max-height: calc(100vh - 56px);
-outline: 0;
-color: #212121;
-z-index: 999;
-`
+  width: 350px;
+  color: #212121;
+  position: fixed;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1em;
+  max-height: calc(100vh - 56px);
+  outline: 0;
+  color: #212121;
+  z-index: 999;
+`;
 
 const IconGrid = styled.div`
   display: grid;
@@ -169,17 +176,16 @@ const IconGrid = styled.div`
   margin-top: 20px;
 `;
 
-const IconItem = styled.div`
-`;
+const IconItem = styled.div``;
 
-const Access = require('./assets/report/access.png');
-const BreakDown = require('./assets/report/breakdown.png');
-const Late = require('./assets/report/late.png');
-const LeftEarly = require('./assets/report/leftEarly.png');
-const NoShow = require('./assets/report/noShow.png');
-const Other = require('./assets/report/other.png');
-const Packed = require('./assets/report/packed.png');
-const Security = require('./assets/report/security.png');
+const Access = require("./assets/report/access.png");
+const BreakDown = require("./assets/report/breakdown.png");
+const Late = require("./assets/report/late.png");
+const LeftEarly = require("./assets/report/leftEarly.png");
+const NoShow = require("./assets/report/noShow.png");
+const Other = require("./assets/report/other.png");
+const Packed = require("./assets/report/packed.png");
+const Security = require("./assets/report/security.png");
 
 const ButtonRow = styled.div`
   margin-top: 20px;
@@ -191,57 +197,59 @@ const CancelButton = styled.button`
   box-sizing: border-box;
   height: 41px;
   width: 139px;
-  border: 1px solid #FFD700;
-  background-color: #FFFFFF;
-  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+  border: 1px solid #ffd700;
+  background-color: #ffffff;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
   font-size: 13px;
 `;
 const SubmitButton = styled.button`
-	height: 40px;
-	width: 138px;
-	background-color: #FFD700;
-  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+  height: 40px;
+  width: 138px;
+  background-color: #ffd700;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
   font-size: 13px;
 `;
 
-function ReportDialog({ visible, onSubmit, service: { code, endStopSuburb, estimatedTimeTillArrival, reported } }) {
+function ReportDialog({
+  visible,
+  onSubmit,
+  service: { code, endStopSuburb, estimatedTimeTillArrival, reported }
+}) {
   return (
     <>
-      <MyDialog visible={visible} >
+      <MyDialog visible={visible}>
         <h2>Report this bus service</h2>
         <StopLabel>
           <div>
             <StopCode>{code}</StopCode>
             <Destination>to {endStopSuburb}</Destination>
           </div>
-          <TimeBox>
-            TimeBox
-          </TimeBox>
+          <TimeBox>TimeBox</TimeBox>
         </StopLabel>
         <IconGrid>
           <IconItem>
-            <img src={BreakDown} alt="" width="85"/>
+            <img src={BreakDown} alt="" width="85" />
           </IconItem>
           <IconItem>
-            <img src={LeftEarly} alt="" width="85"/>
+            <img src={LeftEarly} alt="" width="85" />
           </IconItem>
           <IconItem>
-            <img src={Late} alt="" width="85"/>
+            <img src={Late} alt="" width="85" />
           </IconItem>
           <IconItem>
-            <img src={Packed} alt="" width="85"/>
+            <img src={Packed} alt="" width="85" />
           </IconItem>
           <IconItem>
-            <img src={NoShow} alt="" width="85"/>
+            <img src={NoShow} alt="" width="85" />
           </IconItem>
           <IconItem>
-            <img src={Access} alt="" width="85"/>
+            <img src={Access} alt="" width="85" />
           </IconItem>
           <IconItem>
-            <img src={Security} alt="" width="85"/>
+            <img src={Security} alt="" width="85" />
           </IconItem>
           <IconItem>
-            <img src={Other} alt="" width="85"/>
+            <img src={Other} alt="" width="85" />
           </IconItem>
         </IconGrid>
         <ButtonRow>
@@ -254,13 +262,13 @@ function ReportDialog({ visible, onSubmit, service: { code, endStopSuburb, estim
   );
 }
 
-const Success = require('./assets/Success.png');
+const Success = require("./assets/Success.png");
 
-function SuccessDialog({visible, onClose}) {
+function SuccessDialog({ visible, onClose }) {
   return (
     <>
       <MyDialog2 visible={visible}>
-        <Link to={'/chat'}>
+        <Link to={"/chat"}>
           <img src={Success} alt="" width="100%" />
         </Link>
       </MyDialog2>
@@ -272,11 +280,7 @@ export function ServiceScreen({
   history,
   service: { code, endStopSuburb, estimatedTimeTillArrival, reported }
 }) {
-  return (
-    <div>
-      
-    </div>
-  );
+  return <div></div>;
 }
 
 export default Services;
